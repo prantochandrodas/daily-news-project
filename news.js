@@ -35,7 +35,9 @@ const loadDetails = id => {
 
 // display details
 const displayDetails = news => {
-  // console.log(news);
+  const postTotal = document.getElementById('postTotal');
+  postTotal.innerText=news.length;
+   console.log(news.length);
   
   news=news.slice(0,10);
   const noNews = document.getElementById('noNews');
