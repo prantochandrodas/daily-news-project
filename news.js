@@ -8,7 +8,9 @@ const loadNewsCategory = () => {
 
 // display news catogory
 const displayData = categories => {
+  //get container by id
   const categoriesContainer = document.getElementById('news-container');
+      
   categories.forEach(category => {
     console.log(category)
     const div = document.createElement('div');
@@ -27,7 +29,9 @@ const displayData = categories => {
 }
  // fetech dynamic url for details
 const loadDetails = id => {
+  //Spinner 
   toggleSpinner(true);
+
   fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
     .then(res => res.json())
     .then(data => displayDetails(data.data))
@@ -36,21 +40,26 @@ const loadDetails = id => {
 
 // display details
 const displayDetails = news => {
+  // sort array Objects 
   news.sort(function(a,b){
         return b.total_view-a.total_view;
   });
-  console.log(news);
+
+
   const postTotal = document.getElementById('postTotal');
   postTotal.innerText=news.length;
    console.log(news.length);
   
   news=news.slice(0,10);
+  // set no news found error
   const noNews = document.getElementById('noNews');
   if(news.length===0){
     noNews.classList.remove('d-none');
   }else{
     noNews.classList.add('d-none');
   }
+
+
   const allNewsContainer = document.getElementById('allNews-container');
   allNewsContainer.innerHTML="";
   news.forEach(news => {
@@ -81,17 +90,20 @@ const displayDetails = news => {
 </div>`
 allNewsContainer.appendChild(newsDiv);
   });
+
+  // spinner 
   toggleSpinner(false);
   
 }
 
 const loadModal=ModalId=>{
-  
+  //fetch modal by dynamic url
   fetch(`https://openapi.programming-hero.com/api/news/${ModalId}`)
   .then(res => res.json())
   .then(data => displayModalDetails(data.data[0]))
   .catch(err => console.log(err))
 }
+//display modal
 const displayModalDetails=data=>{
   console.log(data);
   const modalDetails = document.getElementById('news-new-details');
@@ -102,6 +114,8 @@ const displayModalDetails=data=>{
  <span>Published Date: ${data.author.published_date ? data.author.published_date : 'No data Founded'}</span>` 
 }
 
+
+// spinner condition 
 const toggleSpinner = isLoading=>{
   const loaderSection = document.getElementById('loader');
   if(isLoading){
@@ -111,5 +125,9 @@ const toggleSpinner = isLoading=>{
       loaderSection.classList.add('d-none')
   }
 }
+
+// call loadDetails function for by default value 
 loadDetails('01');
+
+// call loadNewsCategory function 
 loadNewsCategory();
