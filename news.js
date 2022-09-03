@@ -10,6 +10,7 @@ const loadNewsCategory = () => {
 const displayData = categories => {
   const categoriesContainer = document.getElementById('news-container');
   categories.forEach(category => {
+    console.log(category)
     const div = document.createElement('div');
     
     div.innerHTML =
@@ -35,6 +36,10 @@ const loadDetails = id => {
 
 // display details
 const displayDetails = news => {
+  news.sort(function(a,b){
+        return b.total_view-a.total_view;
+  });
+  console.log(news);
   const postTotal = document.getElementById('postTotal');
   postTotal.innerText=news.length;
    console.log(news.length);
@@ -49,6 +54,7 @@ const displayDetails = news => {
   const allNewsContainer = document.getElementById('allNews-container');
   allNewsContainer.innerHTML="";
   news.forEach(news => {
+    
     const newsDiv = document.createElement('div');
     newsDiv.classList.add('container');
     newsDiv.innerHTML =
